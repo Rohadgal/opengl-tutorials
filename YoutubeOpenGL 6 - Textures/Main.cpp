@@ -105,7 +105,7 @@ int main()
 	std::string texPath = "/Resources/YoutubeOpenGL 6 - Textures/";
 
 	// Texture
-	Texture popCat((parentDir + texPath + "pop_cat.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture popCat((parentDir + texPath + "gati.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	popCat.texUnit(shaderProgram, "tex0", 0);
 
 	// Original code from the tutorial
