@@ -25,15 +25,15 @@ const unsigned int height = 800;
 // Vertices coordinates
 GLfloat vertices[] =
 { //     COORDINATES     /        COLORS      /   TexCoord  //
-	-0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,     0.83f, 0.70f, 0.44f,	1.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.25f,  //1  // *4
+	-0.5f, -0.5f, -0.5f,     0.83f, 0.70f, 0.44f,	0.75f, 0.25f, // 3
+	 0.5f, -0.5f, -0.5f,     0.83f, 0.70f, 0.44f,	0.5f, 0.25f, //2
+	 0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	0.25f, 0.25f,  // 1  //2
 
-	-0.5f, 0.5f, 0.5f,     0.92f, 0.86f, 0.76f,		0.0f, 1.0f,
-	-0.5f, 0.5f, -0.5f,		0.83f, 0.70f, 0.44f,	1.0f, 1.0f,
-	0.5f, 0.5f, -0.5f,		0.83f, 0.70f, 0.44f,	0.0f, 1.0f,
-	0.5f, 0.5f, 0.5f,		0.83f, 0.70f, 0.44f,	1.0f, 1.0f
+	-0.5f, 0.5f, 0.5f,     0.92f, 0.86f, 0.76f,		0.0f, 0.5f,  // 1 //*4
+	-0.5f, 0.5f, -0.5f,		0.83f, 0.70f, 0.44f,	0.75f, 0.5f, // 3
+	0.5f, 0.5f, -0.5f,		0.83f, 0.70f, 0.44f,	0.5f, 0.5f,  //2
+	0.5f, 0.5f, 0.5f,		0.83f, 0.70f, 0.44f,	0.25f, 0.5f  // 1 //2
 
 	
 
@@ -44,8 +44,8 @@ GLuint indices[] =
 {
 	0, 1, 2,
 	0, 2, 3,
-	0, 1, 4,
-	1, 5, 4,
+	0, 1, 4, //
+	1, 5, 4, //
 	2, 1, 5,
 	2, 5, 6,
 	2, 3, 7,
@@ -54,7 +54,6 @@ GLuint indices[] =
 	3, 4, 7,
 	7, 4, 5,
 	7, 5, 6
-
 };
 
 
@@ -128,7 +127,7 @@ int main()
 	std::string texPath = "/Resources/YoutubeOpenGL 7 - Going 3D/";
 
 	// Texture
-	Texture brickTex((parentDir + texPath + "gati.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture brickTex((parentDir + texPath + "dice.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGB, GL_UNSIGNED_BYTE);
 	brickTex.texUnit(shaderProgram, "tex0", 0);
 
 	// Original code from the tutorial
