@@ -33,27 +33,31 @@ GLfloat vertices[] =
 	-0.5f, 0.5f, 0.5f,     0.92f, 0.86f, 0.76f,		0.0f, 0.5f,  // 1 //*4
 	-0.5f, 0.5f, -0.5f,		0.83f, 0.70f, 0.44f,	0.75f, 0.5f, // 3
 	0.5f, 0.5f, -0.5f,		0.83f, 0.70f, 0.44f,	0.5f, 0.5f,  //2
-	0.5f, 0.5f, 0.5f,		0.83f, 0.70f, 0.44f,	0.25f, 0.5f  // 1 //2
+	0.5f, 0.5f, 0.5f,		0.83f, 0.70f, 0.44f,	0.25f, 0.5f,  // 1 //2
 
-	
-
+	-0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	1.0f, 0.25f,
+	-0.5f, 0.5f, 0.5f,     0.92f, 0.86f, 0.76f,		1.0f, 0.5f,
+	0.5f, 0.5f, 0.5f,		0.83f, 0.70f, 0.44f,	0.5f, 0.75f,   // 7  *6
+	-0.5f, 0.5f, 0.5f,     0.92f, 0.86f, 0.76f,		0.75f, 0.75f,  // 4  *6
+	-0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	0.75f, 0.0f,  //0  *5
+	 0.5f, -0.5f,  0.5f,     0.83f, 0.70f, 0.44f,	0.5f, 0.0f,  // 3  *5
 };
 
 // Indices for vertices order
 GLuint indices[] =
 {
-	0, 1, 2,
-	0, 2, 3,
-	0, 1, 4, //
-	1, 5, 4, //
+	12, 1, 2,  // bottom
+	12, 2, 13,
+	8, 1, 9, //
+	1, 5, 9, //
 	2, 1, 5,
 	2, 5, 6,
 	2, 3, 7,
 	2, 7, 6,
 	3, 0, 4,
 	3, 4, 7,
-	7, 4, 5,
-	7, 5, 6
+	10, 11, 5, // top
+	10, 5, 6  // top
 };
 
 
@@ -165,7 +169,7 @@ int main()
 		glm::mat4 proj = glm::mat4(1.0f);
 
 		// Assigns different transformations to each matrix
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
 		proj = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
 
