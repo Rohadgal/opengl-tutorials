@@ -145,6 +145,7 @@ int main()
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
+	float j = 0.0f;
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -165,30 +166,48 @@ int main()
 
 		// Initializes matrices so they are not the null matrix
 		glm::mat4 model = glm::mat4(1.0f);
+		glm::mat4 model2 = glm::mat4(1.0f);
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 proj = glm::mat4(1.0f);
 
 		// Assigns different transformations to each matrix
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
+		//model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
+		model = glm::translate(view, glm::vec3(0.0f, 0.0f, 0.0f));
+		model2 = glm::translate(view, glm::vec3(2.5f, 0.0f, 0.0f));
+
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -25.0f));
 		proj = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
 
 		// Outputs the matrices into the Vertex Shader
 		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//int modelLoc2 = glGetUniformLocation(shaderProgram.ID, "model2");
+
+
 		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 
+		// Draw primitives, number of indices, datatype of indices, index of indices
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		//j += 0.005f;
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
+
+		// Draw primitives, number of indices, datatype of indices, index of indices
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+
+
 		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
 		glUniform1f(uniID, 0.5f);
+		
 		// Binds texture so that is appears in rendering
 		brickTex.Bind();
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
-		// Draw primitives, number of indices, datatype of indices, index of indices
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		
+
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
@@ -209,3 +228,8 @@ int main()
 	glfwTerminate();
 	return 0;
 }
+
+
+// Rendering Multiple Objects in OpenGL - The Cherno
+
+// https://stackoverflow.com/questions/9503866/how-do-i-display-2-or-more-objects-in-opengl-model-view-projection-matrices
