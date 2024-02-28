@@ -361,6 +361,9 @@ int main()
 		glm::mat4 model3 = glm::mat4(1.0f);
 		glm::mat4 model4 = glm::mat4(1.0f);
 		glm::mat4 model5 = glm::mat4(1.0f);
+		glm::mat4 model6 = glm::mat4(1.0f);
+		glm::mat4 model7 = glm::mat4(1.0f);
+		glm::mat4 model8 = glm::mat4(1.0f);
 
 
 		glm::mat4 view = glm::mat4(1.0f);
@@ -369,12 +372,15 @@ int main()
 		// Assigns different transformations to each matrix
 		//model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
 
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-1.0f, -1.0f, -1.0f));
 		model2 = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
 		model3 = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-		model4 = glm::translate(model, glm::vec3(2.0f, 1.0f, 0.0f));
-		model5 = glm::translate(model, glm::vec3(2.0f, -1.0f, 0.0f));
+		model4 = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f));
+		model5 = glm::translate(model, glm::vec3(0.0f, 2.0f, 0.0f));
+		model6 = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+		model7 = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.0f));
+		model8 = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -25.0f));
 		proj = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
@@ -398,7 +404,12 @@ int main()
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model5));
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
-
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model6));
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model7));
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model8));
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
 		glUniform1f(uniID, 0.5f);
 		
