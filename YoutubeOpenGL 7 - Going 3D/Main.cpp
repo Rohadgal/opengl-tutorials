@@ -372,7 +372,7 @@ int main()
 		// Assigns different transformations to each matrix
 		//model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
 
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::translate(model, glm::vec3(-1.0f, -1.0f, -1.0f));
 		model2 = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
 		model3 = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
