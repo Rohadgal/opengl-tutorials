@@ -83,19 +83,51 @@ void apply_rotation(GLfloat angle) {
 		}
 
 }
-//
-//// reset face selection parameters
-//void reset_selected_face() {
-//
-//	x_0 = 0;
-//	x_k = 2;
-//	y_0 = 0;
-//	y_k = 2;
-//	z_0 = 0;
-//	z_k = 2;
-//
-//}
-//
+
+glm::mat4 modelCopy[27] = {
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+			glm::mat4(1.0f),
+};
+
+// reset face selection parameters
+void reset_selected_face() {
+
+	x_0 = 0;
+	x_k = 2;
+	y_0 = 0;
+	y_k = 2;
+	z_0 = 0;
+	z_k = 2;
+
+}
+
 //// keyboard function callback
 //void keyboard_func(unsigned char key, int x, int y) {
 //
@@ -355,12 +387,12 @@ int main()
 		shaderProgram.Activate();
 
 		// Simple timer
-		double crntTime = glfwGetTime();
+		/*double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1 / 60)
 		{
 			rotation += 0.5f;
 			prevTime = crntTime;
-		}
+		}*/
 
 
 		glm::mat4 view = glm::mat4(1.0f);
@@ -375,6 +407,8 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");  // ID
 		// Initializes matrices so they are not the null matrix
+
+
 
 		glm::mat4 model[27] = {
 			glm::mat4(1.0f),
@@ -408,83 +442,57 @@ int main()
 			glm::mat4(1.0f),
 		};
 
-		glm::mat4 modelCopy[27] = {
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
+		
+		bool keyPressed = false;
 
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
+		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+			rotation += 1.0f;
+			keyPressed = true;
+		}
 
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-			glm::mat4(1.0f),
-		};
-
-
-		//glm::vec3 pos[9] = {
-		//	glm::vec3(-1.0f, -1.0f,-1.0f),
-		//	glm::vec3(0.0f, -1.0f, -1.0f),
-		//	glm::vec3(1.0f, -1.0f, -1.0f),
-
-		//	glm::vec3(-1.0f, 0.0f, -1.0f),
-		//	glm::vec3(0.0f, 0.0f, -1.0f),
-		//	glm::vec3(1.0f, 0.0f, -1.0f),
-
-		//	glm::vec3(-1.0f, 1.0f, -1.0f),
-		//	glm::vec3(0.0f, 1.0f, -1.0f),
-		//	glm::vec3(1.0f, 1.0f, -1.0f),
-		//};
-
-		/*glm::mat4 model4 = glm::mat4(1.0f);
-		glm::mat4 model5 = glm::mat4(1.0f);
-		glm::mat4 model6 = glm::mat4(1.0f);
-		glm::mat4 model7 = glm::mat4(1.0f);
-		glm::mat4 model8 = glm::mat4(1.0f);*/
 
 		GLint it = 0;
 		
 		//model[0] = glm::rotate(model[0], glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
+		
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				for (int k = -1; k <= 1; k++) {
+					if (keyPressed) {
+						model[it] = glm::rotate(model[it], glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
+						//keyPressed = false;
+					}
+					model[it] = glm::translate(model[it], glm::vec3(k, j, i));
+					//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model[it]));
+					//glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+					// 
+					//modelCopy[it] =  proj * model[it] * view;
+					
+					//cout<< modelCopy[2][2].z << endl;
+					it++;
+				}
+			}
+		}
+
+		it = 0;
 
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				for (int k = -1; k <= 1; k++) {
-					model[it] = glm::rotate(model[it], glm::radians(rotation), glm::vec3(1.0f, 1.0f, 0.0f));
-					model[it] = glm::translate(model[it], glm::vec3(k, j, i));
-					glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model[it]));
+				
+					modelCopy[it] = model[it];
+					//keyPressed = false;
+					
+					//model[it] = glm::translate(model[it], glm::vec3(k, j, i));
+					glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCopy[it]));
 					glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 					//modelCopy[it] =  proj * model[it] * view;
-					
-					cout<< modelCopy[2][2].z << endl;
+
+					//cout<< modelCopy[2][2].z << endl;
 					it++;
 				}
 			}
-			//cout<< pos[1].x << endl;
-			//model[i] = glm::translate(model[i], -pos[i]);
 		}
-
-		//modelCopy[2] = glm::translate(modelCopy[2], glm::vec3(k, j, i));
-		/*glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCopy[0]));
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);*/
 
 		// Assigns different transformations to each matrix
 
