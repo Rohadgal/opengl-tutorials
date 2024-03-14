@@ -23,6 +23,8 @@ using namespace std;
 
 const unsigned int width = 800;
 const unsigned int height = 800;
+
+bool keyPressed = false;
 //
 //
 struct cube_rotate {
@@ -35,6 +37,14 @@ GLfloat angle;
 GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap, gap_crement;
 cube_rotate cube_rotations[3][3][3];
 //vector<cube_rotate> cube_rotations[3][3][3];
+
+int spinRowOne, spinRowTwo, spinRowThree,
+spinColOne, spinColTwo, spinColThree,
+spinDepOne, spinDepTwo, spinDepThree;
+
+bool rowOnePressed, rowTwoPressed, rowThreePressed,
+colOnePressed, colTwoPressed, colThreePressed,
+depthOnePressed, depthTwoPressed, depthThreePressed;
 
 void apply_rotation(GLfloat angle) {
 
@@ -128,129 +138,112 @@ void reset_selected_face() {
 
 }
 
-//// keyboard function callback
-//void keyboard_func(unsigned char key, int x, int y) {
+
+
+
+//void rotateCube(size_t _i, size_t _j, size_t _k, glm::mat4& _model) {
+//	if (rowOnePressed && _j == 0) { // Q
+//		_model =  glm::rotate(_model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
 //
-//	switch (key) {
+//	}
+//	if (rowTwoPressed) {
+//		if (_j == 1) {
 //
-//	case '+':
-//		gap += gap_crement;
-//		break;
+//		}
+//	}
+//	if (rowThreePressed) {
+//		if (_j == 2) {
 //
-//	case '-':
-//		gap -= gap_crement;
-//		break;
-//		// view rotation
-//		// INcrement or DEcrement
-//	case 'L': // right
-//	case 'l':
-//		rot_y = (rot_y - crement) % 360;
-//		break;
+//		}
+//	}
+//	if (colOnePressed) {
+//		if (_i == 0) {
 //
-//	case 'J': // left
-//	case 'j':
-//		rot_y = (rot_y + crement) % 360;
-//		break;
+//		}
+//	}
+//	if (colTwoPressed) {
+//		if (_i == 1) {
 //
-//	case 'I': // down
-//	case 'i':
-//		rot_x = (rot_x + crement) % 360;
-//		break;
+//		}
+//	}
+//	if (colThreePressed) {
+//		if (_i == 2) {
 //
-//	case 'K': // up
-//	case 'k':
-//		rot_x = (rot_x - crement) % 360;
-//		break;
-//		// end of view rotation
+//		}
+//	}
+//	if (depthOnePressed) {
+//		if (_k == 0) {
 //
-//		// cube movements
+//		}
+//	}
+//	if (depthTwoPressed) {
+//		if (_k == 1) {
 //
-//		// select cube face
-//		// x-axis faces
-//	case 'Q':
-//	case 'q':
-//		reset_selected_face();
-//		x_0 = 0;
-//		x_k = 0;
-//		break;
+//		}
+//	}
+//	if (depthThreePressed) {
+//		if (_k == 2) {
 //
-//	case 'W':
-//	case 'w':
-//		reset_selected_face();
-//		x_0 = 1;
-//		x_k = 1;
-//		break;
-//
-//	case 'E':
-//	case 'e':
-//		reset_selected_face();
-//		x_0 = 2;
-//		x_k = 2;
-//		break;
-//
-//		// y-axis faces
-//	case 'A':
-//	case 'a':
-//		reset_selected_face();
-//		y_0 = 0;
-//		y_k = 0;
-//		break;
-//
-//	case 'S':
-//	case 's':
-//		reset_selected_face();
-//		y_0 = 1;
-//		y_k = 1;
-//		break;
-//
-//	case 'D':
-//	case 'd':
-//		reset_selected_face();
-//		y_0 = 2;
-//		y_k = 2;
-//		break;
-//
-//		// z-axis faces
-//	case 'C':
-//	case 'c':
-//		reset_selected_face();
-//		z_0 = 0;
-//		z_k = 0;
-//		break;
-//
-//	case 'X':
-//	case 'x':
-//		reset_selected_face();
-//		z_0 = 1;
-//		z_k = 1;
-//		break;
-//
-//	case 'Z':
-//	case 'z':
-//		reset_selected_face();
-//		z_0 = 2;
-//		z_k = 2;
-//		break;
-//
-//		// move selected face
-//	case 'U': // counter-clockwise
-//	case 'u':
-//		apply_rotation(-90);
-//		break;
-//
-//	case 'O': // clockwise
-//	case 'o':
-//		apply_rotation(90);
-//		break;
-//
-//		// end of cube movements
-//
-//	default:
-//		break;
-//
+//		}
 //	}
 //}
 
+
+float qRotation = 0.0f, aRotation = 0.0f, zRotation = 0.0f, wRotation = 0.0f;;
+void keyboard_func(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	//if (action == GLFW_PRESS) {
+		switch (key) {
+		case GLFW_KEY_Q:
+			if (action == GLFW_PRESS && !keyPressed) {
+            qRotation += 90.0f;
+            keyPressed = true;
+			//rowOnePressed = true;
+        } else if (action == GLFW_RELEASE) {
+            keyPressed = false;
+		//	rowOnePressed = false;
+        }
+			break;
+		case GLFW_KEY_A:
+			if (action == GLFW_PRESS && !keyPressed) {
+				aRotation += 90.0f;
+				keyPressed = true;
+			} else if (action == GLFW_RELEASE) {
+				keyPressed = false;
+			}
+			break;
+		case GLFW_KEY_Z:
+			if (action == GLFW_PRESS && !keyPressed) {
+				zRotation += 90.0f;
+				keyPressed = true;
+			}
+			else if (action == GLFW_RELEASE) {
+				keyPressed = false;
+			}
+			break;
+		case GLFW_KEY_W:
+			if (action == GLFW_PRESS && !keyPressed) {
+				wRotation += 90.0f;
+				keyPressed = true;
+			}
+			else if (action == GLFW_RELEASE) {
+				keyPressed = false;
+			}
+			break;
+		case GLFW_KEY_I:
+			rot_x = (rot_x + crement) % 360;
+			break;
+		case GLFW_KEY_K:
+			rot_x = (rot_x - crement) % 360;
+			break;
+		case GLFW_KEY_U:
+			apply_rotation(-90);
+			break;
+		case GLFW_KEY_O:
+			apply_rotation(90);
+			break;
+		}
+	//}
+}
 // Vertices coordinates
 GLfloat vertices[] =
 { 
@@ -369,7 +362,7 @@ int main()
 	brickTex.texUnit(shaderProgram, "tex0", 0);*/
 
 	// Variables that help the rotation of the pyramid
-	float rotation = 0.0f;
+	
 	double prevTime = glfwGetTime();
 
 	// Enables the Depth Buffer
@@ -377,6 +370,9 @@ int main()
 
 	float j = 0.0f;
 	// Main while loop
+
+	glfwSetKeyCallback(window, keyboard_func);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		// Specify the color of the background
@@ -443,12 +439,12 @@ int main()
 		};
 
 		
-		bool keyPressed = false;
+		
 
-		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		/*if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
 			rotation += 1.0f;
 			keyPressed = true;
-		}
+		}*/
 
 
 		GLint it = 0;
@@ -458,10 +454,21 @@ int main()
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				for (int k = -1; k <= 1; k++) {
-					if (keyPressed) {
-						model[it] = glm::rotate(model[it], glm::radians(rotation), glm::vec3(1.0f, 0.0f, 0.0f));
-						//keyPressed = false;
+					if ( j == -1) {
+						model[it] = glm::rotate(model[it], glm::radians(qRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+						//rotateCube(i, j, k, model[it]);
 					}
+					if (j == 0) {
+						model[it] = glm::rotate(model[it], glm::radians(aRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					if (j == 1) {
+						model[it] = glm::rotate(model[it], glm::radians(zRotation), glm::vec3(0.0f, 1.0f, 0.0f));
+					}
+					
+					
+
+						//keyPressed = false;
+					//}
 					model[it] = glm::translate(model[it], glm::vec3(k, j, i));
 					//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model[it]));
 					//glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
